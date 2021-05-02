@@ -26,13 +26,13 @@ public class SchemCommand implements CommandExecutor
 		}
 		
 		if (args.length == 0) {
-			sender.sendMessage("§a---=[ §2mwSchematics§a v"+Schem.getPlugin().getDescription().getVersion()+" by monowii ]=---");
-			sender.sendMessage("§8<> : Required / () : Optional");
-			sender.sendMessage("§7/mws copy <schematicFileName> <x y z worldName> (relative -rel) (copyAir -ca) (removeEntities -re[minecart,drop])");
+			sender.sendMessage("Â§a---=[ Â§2mwSchematicsÂ§a v"+Schem.getPlugin().getDescription().getVersion()+" by monowii ]=---");
+			sender.sendMessage("Â§8<> : Required / () : Optional");
+			sender.sendMessage("Â§7/mws copy <schematicFileName> <x y z worldName> (relative -rel) (copyAir -ca) (removeEntities -re[minecart,drop])");
 		}
 		else
 		{
-			if (args[0].equalsIgnoreCase("copy") && (cmdBlock != null && sender.hasPermission("mwSchematics.admin")))
+			if (args[0].equalsIgnoreCase("copy") && (sender.hasPermission("mwSchematics.admin")))
 			{
 				if (args.length >= 6)
 				{
@@ -40,9 +40,6 @@ public class SchemCommand implements CommandExecutor
 					
 					//Only supported by commandBlock
 					boolean relativeToCommandBlock = false;
-					if (args.length > 6 && cmdBlock != null)
-						if (Utils.argsContain(args, "-rel"))
-							relativeToCommandBlock = true;
 					
 					boolean copyAir = false;
 					if (args.length > 6)
@@ -69,31 +66,25 @@ public class SchemCommand implements CommandExecutor
 							int yPos = Utils.parseInt(args[3]);
 							int zPos = Utils.parseInt(args[4]);
 							
-							if (relativeToCommandBlock) {
-								xPos = cmdBlock.getBlock().getX() + xPos;
-								yPos = cmdBlock.getBlock().getY() + yPos;
-								zPos = cmdBlock.getBlock().getZ() + zPos;
-							}
-							
 							String worldName = args[5];
 							Vector origin = new Vector(xPos, yPos, zPos);
 							
 							if (Utils.copySchematic(Schem.getPlugin().getServer().getWorld(worldName), schematicFile, origin, copyAir, removeEntities, entitiesToRemove)) {
-								sender.sendMessage("§aSchematic pasted !");
+								sender.sendMessage("Â§aSchematic pasted !");
 							} else {
-								sender.sendMessage("§cError while pasting schematic");
+								sender.sendMessage("Â§cError while pasting schematic");
 							}
 						} else {
-							sender.sendMessage("§cBad positions");
+							sender.sendMessage("Â§cBad positions");
 						}
 					} else {
-						sender.sendMessage("§cThis schematic file not exist");
+						sender.sendMessage("Â§cThis schematic file not exist");
 					}
 				} else {
-					sender.sendMessage("§cBad command arguments");
+					sender.sendMessage("Â§cBad command arguments");
 				}
 			} else {
-				sender.sendMessage("§cUnknown argument");
+				sender.sendMessage("Â§cUnknown argument");
 			}
 		}
 		
